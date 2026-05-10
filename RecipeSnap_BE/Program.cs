@@ -14,6 +14,9 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// Global error handling (built-in)
+app.UseExceptionHandler("/error");
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
