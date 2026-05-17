@@ -13,7 +13,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins("http://localhost:5173", "https://recipe-snap-theta.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
