@@ -1,11 +1,20 @@
-export async function scanImage(imageBase64: string, isMetric: boolean) {
-  const response = await fetch("/api/scan", {
+import { type ScanResult } from "../types/ScanResult";
+
+interface RequestBody {
+  file: File;
+  isMetric: boolean;
+}
+
+export async function scanImage({ file, isMetric }: RequestBody): Promise<ScanResult> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await fetch(`https://localhost:7166/api/Scan/upload?isMetric=${isMetric}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ image: imageBase64, isMetric }),
+    body: formData,
   });
 
-  if (!response.ok) throw new Error("Scan failed");
+  if (!response.ok) throw new Error(`Scan failed: ${response.statusText}`);
 
   return response.json();
 }
