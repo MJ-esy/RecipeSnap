@@ -1,5 +1,5 @@
 import { type ScanResult } from "../types/ScanResult";
-const BASE_URL = process.env.VITE_API_URL || "https://localhost:7166";
+const BASE_URL = import.meta.env.VITE_API_URL || "https://localhost:7166";
 interface RequestBody {
   file: File;
   isMetric: boolean;
