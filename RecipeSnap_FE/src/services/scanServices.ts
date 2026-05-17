@@ -9,7 +9,7 @@ export async function scanImage({ file, isMetric }: RequestBody): Promise<ScanRe
   const formData = new FormData();
   formData.append("file", file);
 
-  const response = await fetch(`${BASE_URL}api/Scan/upload?isMetric=${isMetric}`, {
+  const response = await fetch(`${BASE_URL}/api/Scan/upload?isMetric=${isMetric}`, {
     method: "POST",
     body: formData,
   });
