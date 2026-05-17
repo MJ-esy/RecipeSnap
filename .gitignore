@@ -24,6 +24,8 @@ nuget.config
 # .NET secrets / certificates
 *.pfx
 *.p12
+appsettings.development.json
+appsettings.Development.json
 
 # Node / Vite
 node_modules/
