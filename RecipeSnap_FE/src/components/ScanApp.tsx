@@ -29,6 +29,7 @@ export default function ScanApp() {
         try {
             const data = await scanImage({ file: selectedFile, isMetric });
             setResult(data);
+            console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
             console.log(data); // { conversions: [...], unrecognised: [...] }
         } catch (error) {
             console.error('Error scanning image:', error);
