@@ -17,9 +17,9 @@ namespace RecipeSnap_BE.Services
         //Handles patterns, mixed/simple fractions and/or multiword units (i.e. "200g", "350°F", "fl oz", "1 1/2 cups")
         //falls back to single-word units
         private static readonly Regex _pattern = new(
-            @"(\d+\s+\d+/\d+|\d+/\d+|\d+\.?\d*)\s*" +
-            @"(fl\.?\s*oz|imperial\s*pints?|us\s*pints?|" +
-            @"cups?|tbsp|tsp|oz|lbs?|kg|g\b|ml|l\b|°[cfCF]|[cfCF](?=\b))",
+           @"((?:\d+\s+)?\d+/\d+|[½⅓⅔¼¾⅛⅜⅝⅞]|\d+\.?\d*)\s*" +
+           @"(fl\.?\s*oz|fluid\s*ounces?|imperial\s*pints?|us\s*pints?|cups?|" +
+           @"pounds?|ounces?|oz|lbs?|kg|g\b|ml|l\b|°[cfCF]|[cfCF](?=\b))",
             RegexOptions.IgnoreCase | RegexOptions.Compiled
         );
 
@@ -29,6 +29,17 @@ namespace RecipeSnap_BE.Services
             value = 0;
 
             input = input.Trim();
+
+            // Unicode vulgar fractions
+            var unicodeFractions = new Dictionary<char, double>
+            {
+                { '½', 0.5 }, { '⅓', 1.0/3 }, { '⅔', 2.0/3 },
+                { '¼', 0.25 }, { '¾', 0.75 }, { '⅛', 0.125 },
+                { '⅜', 0.375 }, { '⅝', 0.625 }, { '⅞', 0.875 }
+            };
+
+            if (input.Length == 1 && unicodeFractions.TryGetValue(input[0], out value))
+                return true;
 
             // Mixed fraction: "1 1/2"
             if (input.Contains(' ') && input.Contains('/'))
