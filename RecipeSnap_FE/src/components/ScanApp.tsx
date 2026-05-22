@@ -64,7 +64,6 @@ export default function ScanApp() {
                         id="image-upload"
                         type="file"
                         accept="image/*"
-                        {...{ capture: "environment" }}
                         onChange={handleImageSelect}
                         className="hidden"
                     />
@@ -78,18 +77,18 @@ export default function ScanApp() {
                 </button>
 
                 <div className='m-3'>
+                    {previewUrl && (
+                        <img
+                            src={previewUrl}
+                            alt="Scanned recipe"
+                            className="rounded-lg mb-4 max-h-96 object-contain w-full"
+                        />
+                    )}
                     {isLoading && <span className="loading loading-ring loading-lg"></span>}
                     {error && <p className="text-error">Error: {error}</p>}
 
                     {result && (
                         <div className="mt-3">
-                            {previewUrl && (
-                                <img
-                                    src={previewUrl}
-                                    alt="Scanned recipe"
-                                    className="rounded-lg mb-4 max-h-2000 object-contain w-full"
-                                />
-                            )}
                             <h2 className="text-lg font-bold mb-2">Conversions</h2>
                             <div className="space-y-2 mb-3">
                                 {result.conversions.map((c, i) => (
